@@ -50,38 +50,38 @@ Kiến trúc chuỗi khối và sổ cái phân tán (Distributed Ledger Technol
 
 <b>1. Admin của tổ chức tài chính có thể thêm FIs(Financial Institutions - tổ chức tài chính) đã được xác minh:</b>
 
-Người quản trị của tổ chức tài chính có thể thêm các tổ chức tài chính khác đã được xác minh vào hệ thống.
+    Người quản trị của tổ chức tài chính có thể thêm các tổ chức tài chính khác đã được xác minh vào hệ thống.
 
 <b>2. Admin có thể làm FIs trở nên hoạt động/không hoạt động liên quan đến bất kỳ hành động nào:</b>
 
-Người quản trị có quyền làm cho các tổ chức tài chính trở thành hoạt động hoặc không hoạt động liên quan đến các chức năng và hoạt động trong hệ thống.
+    Người quản trị có quyền làm cho các tổ chức tài chính trở thành hoạt động hoặc không hoạt động liên quan đến các chức năng và hoạt động trong hệ thống.
 
 <b>3. FIs có thể thêm Khách hàng và yêu cầu KYC từ Khách hàng:</b>
 
-Các tổ chức tài chính có thể thêm khách hàng vào hệ thống và yêu cầu khách hàng cung cấp thông tin KYC.
+    Các tổ chức tài chính có thể thêm khách hàng vào hệ thống và yêu cầu khách hàng cung cấp thông tin KYC.
 
 <b>4. Khách hàng có thể phê duyệt/từ chối yêu cầu KYC từ FI:</b>
 
-Khách hàng có quyền phê duyệt hoặc từ chối yêu cầu cung cấp thông tin KYC từ tổ chức tài chính.
+    Khách hàng có quyền phê duyệt hoặc từ chối yêu cầu cung cấp thông tin KYC từ tổ chức tài chính.
 
 <b>5. Nếu Khách hàng chấp thuận yêu cầu KYC, một thông báo (qua email/số điện thoại) sẽ được gửi đến FI và FI có thể truy cập các tài liệu KYC của khách hàng như Thẻ Aadhar, Pancard, ID ảnh, Chữ ký, v.v. để xác minh:</b>
 
-Nếu khách hàng đồng ý cung cấp thông tin KYC, một thông báo sẽ được gửi đến tổ chức tài chính, thông qua email hoặc số điện thoại, và tổ chức tài chính có quyền truy cập các tài liệu KYC của khách hàng như Chứng minh nhân dân Aadhar, Chứng minh thuế PAN, Giấy tờ tùy thân, Chữ ký, v.v. để tiến hành xác minh.
+    Nếu khách hàng đồng ý cung cấp thông tin KYC, một thông báo sẽ được gửi đến tổ chức tài chính, thông qua email hoặc số điện thoại, và tổ chức tài chính có quyền truy cập các tài liệu KYC của khách hàng như Chứng minh nhân dân Aadhar, Chứng minh thuế PAN, Giấy tờ tùy thân, Chữ ký, v.v. để tiến hành xác minh.
 
 <b>6. FIs có thể phê duyệt/từ chối dữ liệu của Khách hàng sau khi xác minh:</b>
 
-Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
+    Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
 
 <b>7. Nếu FI từ chối xác minh KYC của Khách hàng, một thông báo (qua email/số điện thoại) sẽ được gửi cho Khách hàng kèm theo lý do:</b>
 
-Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
+    Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
 
 <b>8. Khách hàng có thể cập nhật các tài liệu KYC và thông báo cập nhật sẽ được kích hoạt cho tất cả các FIs được kết nối:</b>
 
-Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
+    Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
 
 <b>9. Tất cả các vai trò người dùng phải có địa chỉ metamask bắt buộc trên mạng triển khai.</b>
 
 <b>10. Người dùng triển khai hợp đồng lên mạng chính sẽ được coi là Quản trị viên FI:</b>
 
-Người dùng triển khai hợp đồng thông minh (smart contract) lên mạng chính sẽ được xem là quản trị viên của tổ chức tài chính.
+    Người dùng triển khai hợp đồng thông minh (smart contract) lên mạng chính sẽ được xem là quản trị viên của tổ chức tài chính.
