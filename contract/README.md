@@ -1,91 +1,87 @@
-# Hello NEAR Contract
-
-The smart contract exposes two methods to enable storing and retrieving a greeting in the NEAR network.
-
-```rust
-const DEFAULT_MESSAGE: &str = "Hello";
-
-#[near_bindgen]
-#[derive(BorshDeserialize, BorshSerialize)]
-pub struct Contract {
-    greeting: String,
-}
-
-impl Default for Contract {
-    fn default() -> Self {
-        Self{greeting: DEFAULT_MESSAGE.to_string()}
-    }
-}
-
-#[near_bindgen]
-impl Contract {
-    // Public: Returns the stored greeting, defaulting to 'Hello'
-    pub fn get_greeting(&self) -> String {
-        return self.greeting.clone();
-    }
-
-    // Public: Takes a greeting, such as 'howdy', and records it
-    pub fn set_greeting(&mut self, greeting: String) {
-        // Record a log permanently to the blockchain!
-        log!("Saving greeting {}", greeting);
-        self.greeting = greeting;
-    }
-}
-```
-
-<br />
-
 # Quickstart
 
-1. Make sure you have installed [rust](https://rust.org/).
-2. Install the [`NEAR CLI`](https://github.com/near/near-cli#setup)
+Clone this repository locally or [**open it in gitpod**](https://github.com/DevPhamPham/CharityChain-CRT-). Then follow these steps:
 
-<br />
-
-## 1. Build and Deploy the Contract
-You can automatically compile and deploy the contract in the NEAR testnet by running:
-
+### 1. Install Dependencies
 ```bash
-./deploy.sh
+npm install
 ```
 
-Once finished, check the `neardev/dev-account` file to find the address in which the contract was deployed:
+### 2. Test the Contract
+Deploy your contract in a sandbox and simulate interactions from users.
 
 ```bash
-cat ./neardev/dev-account
-# e.g. dev-1659899566943-21539992274727
+npm test
 ```
 
-<br />
-
-## 2. Retrieve the Greeting
-
-`get_greeting` is a read-only method (aka `view` method).
-
-`View` methods can be called for **free** by anyone, even people **without a NEAR account**!
-
+### 3. Deploy the Contract
+Build the contract and deploy it in a testnet account
 ```bash
-# Use near-cli to get the greeting
-near view <dev-account> get_greeting
+npm run deploy
 ```
 
-<br />
-
-## 3. Store a New Greeting
-`set_greeting` changes the contract's state, for which it is a `change` method.
-
-`Change` methods can only be invoked using a NEAR account, since the account needs to pay GAS for the transaction.
-
+### 4. Start the Frontend
+Start the web application to interact with your smart contract 
 ```bash
-# Use near-cli to set a new greeting
-near call <dev-account> set_greeting '{"greeting":"howdy"}' --accountId <dev-account>
+npm start
 ```
 
-**Tip:** If you would like to call `set_greeting` using your own account, first login into NEAR using:
+---
 
-```bash
-# Use near-cli to login your NEAR account
-near login
-```
+# Decentralised KYC Near
 
-and then use the logged account to sign the transaction: `--accountId <your-account>`.
+KYC là một quá trình mà các ngân hàng có được thông tin về danh tính và địa chỉ của người mua. Đó là quy trình do cơ quan quản lý điều hành nhằm thực hiện thẩm định để xác minh danh tính của khách hàng. Quá trình này giúp đảm bảo rằng các dịch vụ của ngân hàng không bị lạm dụng. Các ngân hàng có trách nhiệm hoàn thành thủ tục KYC khi mở tài khoản. Các ngân hàng cũng được yêu cầu cập nhật định kỳ chi tiết KYC của khách hàng. KYC có thể là thủ công, tốn thời gian và dư thừa giữa các tổ chức. Chia sẻ thông tin KYC trên Blockchain sẽ cho phép các tổ chức tài chính mang lại kết quả tuân thủ tốt hơn, tăng hiệu quả và cải thiện trải nghiệm của khách hàng.
+
+## Vấn đề
+
+Mỗi công ty phải xác minh danh tính của bạn bằng cách nào đó và điều này đặc biệt quan trọng đối với các tổ chức tài chính. Từ đó, các giao thức 'Know Your Customer' hay KYC đã phát triển để hỗ trợ các công ty đảm bảo họ biết họ đang kinh doanh với ai. Thông thường, điều này liên quan đến một phương pháp mở rộng, rút ra trong đó một số tài liệu nhất định được hiển thị và một số loại kiểm tra hoặc xác minh lý lịch diễn ra. Trong hệ thống KYC truyền thống, mỗi ngân hàng sẽ tiến hành kiểm tra danh tính của mình, tức là mỗi người dùng được kiểm tra riêng lẻ bởi một tổ chức cá nhân hoặc cơ cấu chính phủ. Do đó, sẽ lãng phí thời gian để kiểm tra từng danh tính từ đầu.
+
+## Giải pháp
+
+Kiến trúc chuỗi khối và sổ cái phân tán (Distributed Ledger Technology - DLT) cho phép nhóm thu thập thông tin từ các nhà cung cấp dịch vụ khác nhau vào một cơ sở dữ liệu không thay đổi và bảo mật bằng mật mã mà không cần bên thứ ba xác minh tính xác thực của kiến thức. Có thể hình thành một hệ thống mà người dùng chỉ cần thực hiện quy trình KYC một lần để xác minh danh tính của mình.
+
+## Required:
+
+- Các vai trò khác nhau: Tổ chức tài chính quản trị (ví dụ: RBI), Tổ chức tài chính & Khách hàng
+- Smart contract bao gồm tất cả các quy tắc và giao thức cần thiết cho luồng tài liệu KYC. Nhóm đã tạo 2 địa chỉ liên hệ cho Ngân hàng và Khách hàng, đồng thời kế thừa hợp đồng KYC của hợp đồng đó.
+- Mạng Blockchain để triển khai Hợp đồng. Nhóm đã sử dụng Near Testnet cho hợp đồng của này.
+
+## Các giả định:
+
+<b>1. Admin của tổ chức tài chính có thể thêm FIs(Financial Institutions - tổ chức tài chính) đã được xác minh:</b>
+
+    Người quản trị của tổ chức tài chính có thể thêm các tổ chức tài chính khác đã được xác minh vào hệ thống.
+
+<b>2. Admin có thể làm FIs trở nên hoạt động/không hoạt động liên quan đến bất kỳ hành động nào:</b>
+
+    Người quản trị có quyền làm cho các tổ chức tài chính trở thành hoạt động hoặc không hoạt động liên quan đến các chức năng và hoạt động trong hệ thống.
+
+<b>3. FIs có thể thêm Khách hàng và yêu cầu KYC từ Khách hàng:</b>
+
+    Các tổ chức tài chính có thể thêm khách hàng vào hệ thống và yêu cầu khách hàng cung cấp thông tin KYC.
+
+<b>4. Khách hàng có thể phê duyệt/từ chối yêu cầu KYC từ FI:</b>
+
+    Khách hàng có quyền phê duyệt hoặc từ chối yêu cầu cung cấp thông tin KYC từ tổ chức tài chính.
+
+<b>5. Nếu Khách hàng chấp thuận yêu cầu KYC, một thông báo (qua email/số điện thoại) sẽ được gửi đến FI và FI có thể truy cập các tài liệu KYC của khách hàng như Thẻ Aadhar, Pancard, ID ảnh, Chữ ký, v.v. để xác minh:</b>
+
+    Nếu khách hàng đồng ý cung cấp thông tin KYC, một thông báo sẽ được gửi đến tổ chức tài chính, thông qua email hoặc số điện thoại, và tổ chức tài chính có quyền truy cập các tài liệu KYC của khách hàng như Chứng minh nhân dân Aadhar, Chứng minh thuế PAN, Giấy tờ tùy thân, Chữ ký, v.v. để tiến hành xác minh.
+
+<b>6. FIs có thể phê duyệt/từ chối dữ liệu của Khách hàng sau khi xác minh:</b>
+
+    Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
+
+<b>7. Nếu FI từ chối xác minh KYC của Khách hàng, một thông báo (qua email/số điện thoại) sẽ được gửi cho Khách hàng kèm theo lý do:</b>
+
+    Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
+
+<b>8. Khách hàng có thể cập nhật các tài liệu KYC và thông báo cập nhật sẽ được kích hoạt cho tất cả các FIs được kết nối:</b>
+
+    Nếu tổ chức tài chính từ chối xác minh KYC của khách hàng, một thông báo sẽ được gửi đến khách hàng qua email hoặc số điện thoại, kèm theo lý do từ chối.
+
+<b>9. Tất cả các vai trò người dùng phải có địa chỉ metamask bắt buộc trên mạng triển khai.</b>
+
+<b>10. Người dùng triển khai hợp đồng lên mạng chính sẽ được coi là Quản trị viên FI:</b>
+
+    Người dùng triển khai hợp đồng thông minh (smart contract) lên mạng chính sẽ được xem là quản trị viên của tổ chức tài chính.
