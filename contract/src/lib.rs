@@ -1,6 +1,6 @@
 mod KYC;
-mod Banks;
-mod Customers;
+mod COs;
+mod Repres;
 mod Helpers;
 mod Types;
 

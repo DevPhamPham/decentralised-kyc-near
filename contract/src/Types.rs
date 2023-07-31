@@ -6,13 +6,13 @@ use near_sdk::{near_bindgen, AccountId};
 #[serde(crate = "near_sdk::serde")]
 pub enum Role {
     Admin, // 0
-    Bank, // 1
-    Customer, // 2
+    CO, // 1
+    Repre, // 2
 }
 
 #[derive(Debug,BorshDeserialize, BorshSerialize, Deserialize, Serialize, PartialEq, Clone)]
 #[serde(crate = "near_sdk::serde")]
-pub enum BankStatus {
+pub enum COStatus {
     Active, // 0
     Inactive, // 1
 }
@@ -41,18 +41,18 @@ pub struct User {
     pub email: String,
     pub id_: AccountId,
     pub role: Role,
-    pub status: BankStatus,
+    pub status: COStatus,
 }
 
 // #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, Serialize, Deserialize, Clone)]
 #[serde(crate = "near_sdk::serde")]
-pub struct Customer {
+pub struct Repre {
     pub name: String,
     pub email: String,
     pub mobile_number: u32,
     pub id_: AccountId,
-    pub kyc_verified_by: AccountId, // Address of the bank only if KYC gets verified
+    pub kyc_verified_by: AccountId, // Address of the CO only if KYC gets verified
     pub data_hash: String, // Documents will be stored in decentralised storage & a hash will be created for the same
     pub data_updated_on: u32,
 }
@@ -60,28 +60,28 @@ pub struct Customer {
 // #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, Serialize, Deserialize, Clone)]
 #[serde(crate = "near_sdk::serde")]
-pub struct Bank {
+pub struct CO {
     pub name: String,
     pub email: String,
     pub id_: AccountId,
     pub npoid_code: String, //viết tắt của Nonprofit Organization ID
-    pub kyc_count: u16, // How many KCY's did this bank completed so far
-    pub status: BankStatus, // RBI, we call "admin" here can disable the bank at any instance
+    pub kyc_count: u16, // How many KCY's did this CO completed so far
+    pub status: COStatus, // RBI, we call "admin" here can disable the CO at any instance
 }
 
 // #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize, Serialize, Deserialize)]
 #[serde(crate = "near_sdk::serde")]
 pub struct KycRequest {
-    pub id_: String, // Combination of customer Id & bank is going to be unique
+    pub id_: String, // Combination of Repre Id & CO is going to be unique
     pub user_id_: AccountId,
-    pub customer_name: String,
-    pub bank_id_: AccountId,
-    pub bank_name: String,
+    pub repre_name: String,
+    pub co_id_: AccountId,
+    pub co_name: String,
     pub data_hash: String,
     pub updated_on: u32,
     pub status: KycStatus,
     pub data_request: DataHashStatus, // Get approval from user to access the data
     pub additional_notes: String, // Notes that can be added if KYC verification fails  OR
-    // if customer rejects the access & bank wants to re-request with some message
+    // if repre rejects the access & CO wants to re-request with some message
 }
