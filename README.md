@@ -1,7 +1,7 @@
 
 # Một vài đường links quan trọng
 
-1. [Demo link](Commingsoon)<br />
+1. [Guide link](./contract/GUIDE.md)<br />
 2. [Contract Address](https://explorer.testnet.near.org/transactions/7MuWWhaYirpxqMJ19Gi2Vc6d2a17BWX3rGoUNhPp2gem)<br/>
 3. [Contract Creator](https://explorer.testnet.near.org/transactions/hbs5coB1KmS1FMn9AvUr2eaZnycXfYE7nWmo6rucTYr)<br/>
 4. [Tx Hash of contract creation](https://explorer.testnet.near.org/blocks/HRQ78yrmw5cPiWAX6XV4xgssjUap6B8KFM2yQdT5xBg7)<br/>
@@ -268,7 +268,7 @@ Thành viên trong nhóm
 
 <table>
   <tr>
-    <td align="center"><a href="https://www.linkedin.com/in/ph%E1%BA%A1m-khoa-230741232/"><img src="./frontend/images/Khoa.jpg" width="100px;" alt=""/><br /><sub><b>Phạm Duy Khoa</b></sub></a><br /><a href="https://github.com/DevPhamPham" title="Code">💻</a> <a href="https://github.com/DevPhamPham" title="Documentation">📖</a> <a href="https://github.com/DevPhamPham/" title="Maintenance">❌</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/ph%E1%BA%A1m-khoa-230741232/"><img src="./frontend/images/Khoa2.jpg" width="100px;" alt=""/><br /><sub><b>Phạm Duy Khoa</b></sub></a><br /><a href="https://github.com/DevPhamPham" title="Code">💻</a> <a href="https://github.com/DevPhamPham" title="Documentation">📖</a> <a href="https://github.com/DevPhamPham/" title="Maintenance">❌</a></td>
     <td align="center"><a href="https://www.facebook.com/nguyenthianhthu09"><img src="./frontend/images/Thuxinh.jpg" width="100px;" alt=""/><br /><sub><b>Nguyễn Thị Anh Thư</b></sub></a><br /><a href="https://github.com/nguyenthianhthu0903" title="Code">💻</a> <a href="https://github.com/nguyenthianhthu0903" title="Documentation">📖</a> <a href="https://github.com/nguyenthianhthu0903" title="Maintenance">✅</a></td>
   </tr>
   </table>
