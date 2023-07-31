@@ -1,7 +1,7 @@
 // File: banks.rs
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::{log, near_bindgen, env, AccountId, PanicOnDefault};
-use near_sdk::collections::{UnorderedMap, LookupMap};
+use near_sdk::{log, near_bindgen, AccountId, PanicOnDefault};
+use near_sdk::collections::UnorderedMap;
 use near_sdk::serde::{Deserialize, Serialize};
 
 use crate::Types::{Role, BankStatus, KycStatus, DataHashStatus, User, Customer, Bank, KycRequest};
@@ -10,8 +10,8 @@ use crate::Helpers::Helpers;
 #[near_bindgen]
 #[derive(BorshSerialize, BorshDeserialize, PanicOnDefault)]
 pub struct Banks {
-    bank_list: Vec<near_sdk::AccountId>,
-    banks: UnorderedMap<near_sdk::AccountId, Bank>,
+    pub bank_list: Vec<near_sdk::AccountId>,
+    pub banks: UnorderedMap<near_sdk::AccountId, Bank>,
 }
 
 
@@ -62,7 +62,7 @@ impl Banks {
             id_,
             bank.name,
             bank.email,
-            bank.ifsc_code
+            bank.npoid_code
         );
     }
     
@@ -94,7 +94,6 @@ impl Banks {
                 log!("BankDeactivated: {:?}, {:?}", id_, bank.name);
                 BankStatus::Inactive
             } else {
-                // Already up-to-date
                 bank.status
             }
         } else {

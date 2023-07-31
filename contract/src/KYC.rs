@@ -1,10 +1,9 @@
-use std::ptr::null;
-
 // File: kyc.rs
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
-use near_sdk::collections::{LookupMap, UnorderedMap, UnorderedSet, Vector};
-use near_sdk::{log, near_bindgen, Balance, Promise, env, AccountId, PanicOnDefault};
+use near_sdk::collections::{LookupMap, UnorderedSet,UnorderedMap,Vector};
+use near_sdk::{log, near_bindgen, env, AccountId, PanicOnDefault};
 // use near_sdk::serde::{Deserialize, Serialize};
+
 
 use crate::Types::{Role, BankStatus, KycStatus, DataHashStatus, User, Customer, Bank, KycRequest};
 use crate::Customers::Customers;
@@ -27,7 +26,6 @@ pub struct KYC {
 
 #[near_bindgen]
 impl KYC {
-    // Creates a new instance of KYC contract with the provided admin details.
     #[init]
     pub fn new(name_: String, email_: String) -> Self {
         let admin = env::predecessor_account_id();
@@ -45,6 +43,16 @@ impl KYC {
         let mut users = LookupMap::new(b"u");
         users.insert(&admin, &user);
 
+        let banks = Banks {
+            bank_list: Vec::new(),
+            banks: UnorderedMap::new(b"b".try_to_vec().unwrap()),
+        };
+
+        let customers = Customers {
+            customer_list: Vector::new(b"cl".try_to_vec().unwrap()),
+            customers: LookupMap::new(b"c".try_to_vec().unwrap()),
+        };
+
         KYC {
             admin,
             user_list,
@@ -52,8 +60,8 @@ impl KYC {
             kyc_requests: LookupMap::new(b"kr".try_to_vec().unwrap()),
             bank_customers: LookupMap::new(b"bc".try_to_vec().unwrap()),
             customer_banks: LookupMap::new(b"cb".try_to_vec().unwrap()),
-            banks: Banks::default(),
-            customers: Customers::default(),
+            banks,
+            customers,
         }
     }
 
@@ -99,17 +107,15 @@ impl KYC {
     // Admin Interface
     pub fn get_all_bank_kyc(&self, page_number: u32) -> (u32, Vec<Bank>) {
         // let banks_contract = Banks::default(); 
+        self.is_admin();
         self.banks.get_all_banks(page_number) 
     }
 
     pub fn add_bank_kyc(&mut self, bank: Bank) {
-        assert!(env::predecessor_account_id() == self.admin, "Only admin is allowed");
+        self.is_admin();
         
-        // Call the add_bank function from the Banks contract
-        // let mut banks_contract = Banks::default(); 
         self.banks.add_bank(bank.clone());
 
-        // Adding to common list
         self.users.insert(
             &bank.id_,
             &User {
@@ -125,13 +131,9 @@ impl KYC {
     }
 
     pub fn update_bank_details(&mut self, id_: AccountId, email_: String, name_: String) {
-        assert!(env::predecessor_account_id() == self.admin, "Only admin is allowed");
-
-        // Call the update_bank function from the Banks contract
-        // let mut banks_contract = Banks::default(); 
+        self.is_admin();
         self.banks.update_bank(id_.clone(), email_.clone(), name_.clone());
 
-        // Updating in common list
         if let Some(mut user) = self.users.get(&id_) {
             user.name = name_;
             user.email = email_;
@@ -139,13 +141,9 @@ impl KYC {
     }
 
     pub fn activate_deactivate_bank_kyc(&mut self, id_: AccountId, make_active_: bool) {
-        assert!(env::predecessor_account_id() == self.admin, "Only admin is allowed");
-
-        // Call the activate_deactivate_bank function from the Banks contract
-        // let mut banks_contract = Banks::default(); 
+        self.is_admin();
         let new_status = self.banks.activate_deactivate_bank(id_.clone(), make_active_);
 
-        // Updating in common list
         if let Some(mut user) = self.users.get(&id_) {
             user.status = new_status;
         }
@@ -168,10 +166,8 @@ impl KYC {
         self.banks.is_valid_bank(env::predecessor_account_id());
         let req_id_ = Helpers::append(env::signer_account_id(), customer_.clone().id_);
 
-        // Check if kyc request already exists
         assert!(!self.kyc_request_exists(req_id_.clone().to_string()), "User had kyc req.");
 
-        // Create the kyc request
         let kyc_request = KycRequest {
             id_: req_id_.clone().to_string(),
             user_id_: customer_.clone().id_,
@@ -185,10 +181,8 @@ impl KYC {
             additional_notes: notes_,
         };
 
-        // Add kyc request to the lookup map
         self.kyc_requests.insert(&req_id_.clone().to_string(), &kyc_request);
 
-        // Update the customer-bank relationship
         if let Some(mut bank_customers) = self.bank_customers.get(&env::signer_account_id()) {
             bank_customers.push(customer_.clone().id_);
             self.bank_customers.insert(&env::signer_account_id(), &bank_customers);
@@ -207,7 +201,6 @@ impl KYC {
             self.customer_banks.insert(&customer_.id_, &vec);
         }
 
-        // Emit event
         log!(
                 "KycRequestAdded: {:?}, {:?}, {:?}",
                 req_id_,
@@ -216,7 +209,6 @@ impl KYC {
 
         );
 
-        // Add the customer to the common list if not already present
         if !self.users.contains_key(&customer_.id_) {
             let user = User {
                 name: customer_.clone().name,
@@ -235,20 +227,15 @@ impl KYC {
 
         let req_id_ = Helpers::append(env::signer_account_id(), id_.clone());
 
-        // Check if the KYC request exists
         assert!(self.kyc_request_exists(req_id_.clone().to_string()), "KYC req not found");
 
-        // Check if the customer exists
         assert!(self.customers.customer_exists(id_.clone()), "User not found");
 
-        // Update the KYC request status and additional notes
         if let Some(mut kyc_request) = self.kyc_requests.get(&req_id_.to_string()) {
-            // kyc_request.status = KycStatus::Pending; // Uncomment this line if you want to update the status as well
             kyc_request.data_request = DataHashStatus::Pending;
             kyc_request.additional_notes = notes_;
         }
 
-        // Emit event
         let kyc_request = self.kyc_requests.get(&req_id_.to_string()).expect("KYC request not found");
         log!(
                 "KycReRequested: {:?}, {:?}, {:?}",
@@ -315,7 +302,6 @@ impl KYC {
         self.customers.is_valid_customer(env::signer_account_id());
 
         assert!(page_number > 0, "PN should be > 0");
-        // Assuming msg.sender is the customer's account ID (validated by isValidCustomer modifier)
         let (pages, kyc_requests) = self.get_kyc_requests(page_number, false);
         (pages, kyc_requests)
     }
@@ -338,7 +324,6 @@ impl KYC {
            DataHashStatus::Rejected
         };
 
-        // Update the KYC request
         let mut kyc_request = self.kyc_requests.get(&req_id_.to_string()).expect("KYC req not found");
         kyc_request.data_request = status_.clone();
         kyc_request.additional_notes = note_;
@@ -371,7 +356,6 @@ impl KYC {
         // assert_eq!(env::predecessor_account_id(), self.users.get(&env::predecessor_account_id()).expect("User not found").id_, "Invalid caller");
         self.customers.update_data_hash(hash_.clone(), current_time_);
         
-        // Reset KYC verification status for all banks
         let banks_list_ = self.customer_banks.get(&env::predecessor_account_id()).expect("Banks list not found");
         for bank_id in banks_list_ {
             let req_id_ = Helpers::append(bank_id.clone(), env::predecessor_account_id());
@@ -446,4 +430,5 @@ impl KYC {
         self.banks.is_valid_bank(id_.clone());
         self.banks.get_single_bank(id_.clone()).unwrap()
     }
+
 }

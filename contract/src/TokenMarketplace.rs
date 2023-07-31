@@ -27,10 +27,8 @@ impl TokenMarketplace {
 
         assert!(env::attached_deposit() >= required_amount, "Not enough funds attached to buy tokens");
 
-        // Transfer NEAR to the marketplace
         Promise::new(self.token_contract.get_owner_id()).transfer(required_amount);
 
-        // Transfer tokens to the buyer
         self.token_contract.transfer(buyer_id.clone(), amount);
 
         log!("Bought {} tokens for {} NEAR", amount, required_amount);
@@ -43,10 +41,8 @@ impl TokenMarketplace {
         let seller_balance = self.token_contract.get_balance(seller_id.clone());
         assert!(seller_balance >= amount, "Seller does not have enough tokens to sell");
 
-        // Transfer tokens from the seller to the marketplace
         self.token_contract.transfer(self.token_contract.get_owner_id(), amount);
 
-        // Transfer NEAR to the seller
         Promise::new(seller_id.clone()).transfer(required_amount);
 
         log!("Sold {} tokens for {} NEAR", amount, required_amount);

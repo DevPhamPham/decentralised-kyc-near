@@ -9,8 +9,8 @@ use crate::Types::{Role, BankStatus, KycStatus, DataHashStatus, User, Customer};
 #[near_bindgen]
 #[derive(BorshSerialize, BorshDeserialize, PanicOnDefault)]
 pub struct Customers {
-    customer_list: Vector<AccountId>,
-    customers: LookupMap<AccountId, Customer>,
+    pub customer_list: Vector<AccountId>,
+    pub customers: LookupMap<AccountId, Customer>,
 }
 
 #[near_bindgen]

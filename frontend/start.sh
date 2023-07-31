@@ -3,8 +3,7 @@
 GREEN='\033[1;32m'
 NC='\033[0m' # No Color
 
-# CONTRACT_DIRECTORY=../contract
-CONTRACT_DIRECTORY=./contract
+CONTRACT_DIRECTORY=../contract
 DEV_ACCOUNT_FILE="${CONTRACT_DIRECTORY}/neardev/dev-account.env"
 
 start () {

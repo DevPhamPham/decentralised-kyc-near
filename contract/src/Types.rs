@@ -64,7 +64,7 @@ pub struct Bank {
     pub name: String,
     pub email: String,
     pub id_: AccountId,
-    pub ifsc_code: String,
+    pub npoid_code: String, //viết tắt của Nonprofit Organization ID
     pub kyc_count: u16, // How many KCY's did this bank completed so far
     pub status: BankStatus, // RBI, we call "admin" here can disable the bank at any instance
 }
