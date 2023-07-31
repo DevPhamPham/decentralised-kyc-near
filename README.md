@@ -107,11 +107,11 @@ Kiến trúc chuỗi khối và sổ cái phân tán (Distributed Ledger Technol
 ```rust
     pub enum Role {
         Admin, // 0
-        Bank, // 1
-        Customer, // 2
+        Co, // 1
+        Repre, // 2
     }
 
-    pub enum BankStatus {
+    pub enum CoStatus {
         Active, // 0
         Inactive, // 1
     }
@@ -133,10 +133,10 @@ Kiến trúc chuỗi khối và sổ cái phân tán (Distributed Ledger Technol
         pub email: String,
         pub id_: AccountId,
         pub role: Role,
-        pub status: BankStatus,
+        pub status: CoStatus,
     }
 
-    pub struct Customer {
+    pub struct Repre {
         pub name: String,
         pub email: String,
         pub mobile_number: u32,
@@ -146,21 +146,21 @@ Kiến trúc chuỗi khối và sổ cái phân tán (Distributed Ledger Technol
         pub data_updated_on: u32,
     }
 
-    pub struct Bank {
+    pub struct Co {
         pub name: String,
         pub email: String,
         pub id_: AccountId,
-        pub ifsc_code: String,
+        pub npoid_code: String,
         pub kyc_count: u16, 
-        pub status: BankStatus, 
+        pub status: CoStatus, 
     }
 
     pub struct KycRequest {
         pub id_: String, 
         pub user_id_: AccountId,
-        pub customer_name: String,
-        pub bank_id_: AccountId,
-        pub bank_name: String,
+        pub repre_name: String,
+        pub co_id_: AccountId,
+        pub co_name: String,
         pub data_hash: String,
         pub updated_on: u32,
         pub status: KycStatus,
