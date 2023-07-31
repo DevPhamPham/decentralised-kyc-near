@@ -74,7 +74,7 @@ Kiến trúc chuỗi khối và sổ cái phân tán (Distributed Ledger Technol
 
 # Cùng bắt đầu với KYC Smart Contracts
 
-[Do platform Setup! ](SETUP.md)
+[Thiết lập nền tảng! ](SETUP.md)
 
 ## Rust
 
@@ -268,7 +268,7 @@ Thành viên trong nhóm
 
 <table>
   <tr>
-    <td align="center"><a href="https://www.linkedin.com/in/ph%E1%BA%A1m-khoa-230741232/"><img src="./frontend/images/Khoa2.jpg" width="100px;" alt=""/><br /><sub><b>Phạm Duy Khoa</b></sub></a><br /><a href="https://github.com/DevPhamPham" title="Code">💻</a> <a href="https://github.com/DevPhamPham" title="Documentation">📖</a> <a href="https://github.com/DevPhamPham/" title="Maintenance">❌</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/ph%E1%BA%A1m-khoa-230741232/"><img src="./frontend/images/Khoa.jpg" width="100px;" alt=""/><br /><sub><b>Phạm Duy Khoa</b></sub></a><br /><a href="https://github.com/DevPhamPham" title="Code">💻</a> <a href="https://github.com/DevPhamPham" title="Documentation">📖</a> <a href="https://github.com/DevPhamPham/" title="Maintenance">❌</a></td>
     <td align="center"><a href="https://www.facebook.com/nguyenthianhthu09"><img src="./frontend/images/Thuxinh.jpg" width="100px;" alt=""/><br /><sub><b>Nguyễn Thị Anh Thư</b></sub></a><br /><a href="https://github.com/nguyenthianhthu0903" title="Code">💻</a> <a href="https://github.com/nguyenthianhthu0903" title="Documentation">📖</a> <a href="https://github.com/nguyenthianhthu0903" title="Maintenance">✅</a></td>
   </tr>
   </table>
